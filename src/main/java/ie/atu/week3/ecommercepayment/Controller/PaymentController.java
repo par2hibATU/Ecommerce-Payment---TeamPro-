@@ -1,6 +1,7 @@
 package ie.atu.week3.ecommercepayment.Controller;
 
 import ie.atu.week3.ecommercepayment.DTO.Payment;
+import ie.atu.week3.ecommercepayment.Repository.PaymentClient;
 import ie.atu.week3.ecommercepayment.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,10 @@ import java.util.List;
 public class PaymentController {
     @Autowired
     private final PaymentService paymentService;
-    public PaymentController(PaymentService paymentService) {
+    private final PaymentClient paymentClient;
+
+    public PaymentController(PaymentClient paymentClient, PaymentService paymentService) {
+        this.paymentClient = paymentClient;
         this.paymentService = paymentService;
     }
 
@@ -71,5 +75,11 @@ public class PaymentController {
         }else{
             return ResponseEntity.ok(result);
         }
+    }
+
+    //to check the connection with customer service
+    @GetMapping("check-connection")
+    public String checkConnection(){
+        return paymentClient.confirmPaymentService();
     }
 }
