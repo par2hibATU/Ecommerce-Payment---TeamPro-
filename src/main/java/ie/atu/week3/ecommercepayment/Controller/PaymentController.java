@@ -53,10 +53,10 @@ public class PaymentController {
         return ResponseEntity.ok(qPayment);
     }
 
-    @PutMapping("/payment/id/{id}")
+    @PutMapping("/payment/id/{paymentId}")
     public ResponseEntity<Payment> updatePayment(@PathVariable String paymentId, @RequestBody Payment payment){
         try{
-            Payment existingPayment = paymentService.getPaymentById(paymentId);
+            Payment existingPayment = paymentService.updatePaymentDetails(paymentId, payment);
             return ResponseEntity.ok(existingPayment);
         }catch (RuntimeException e){
             return ResponseEntity.notFound().build();
