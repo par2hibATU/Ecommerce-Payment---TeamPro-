@@ -48,8 +48,8 @@ jobs:
       #Step to push Docker image to Docker Hub
       - name: Push Docker Image
         run: |
-          docker tag productexercise ${{ secrets.DOCKER_USERNAME }}/productexercise:latest 
-          docker push ${{ secrets.DOCKER_USERNAME }}/productexercise:latest
+          docker tag ecom-payment ${{ secrets.DOCKER_USERNAME }}/ecom-payment:latest 
+          docker push ${{ secrets.DOCKER_USERNAME }}/ecom-payment:latest
 
 
 
