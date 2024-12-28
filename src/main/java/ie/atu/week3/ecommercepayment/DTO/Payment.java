@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Payment {
     @Id
     private String paymentId;
-    private String paymentType;        //Credit or Cash
+    private String paymentType;        //Card or Cash
     private String paymentMethod;      //Credit-Debit
     private String paymentDate;
     private String paymentAmount;
