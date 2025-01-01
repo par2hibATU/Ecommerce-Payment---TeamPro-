@@ -83,7 +83,7 @@ public class ControllerIntegrationTest {
 
     @Test
     public void testUpdatePayment() throws Exception {
-        Payment payment = new Payment(null, "Cash", "null", "2002-12-05", "150.00");
+        Payment payment = new Payment("1", "Cash", "null", "2002-12-05", "150.00");
         Payment savedPayment = paymentRepo.save(payment);
 
         Payment updatedPayment = new Payment(savedPayment.getPaymentId(), "Card", "Debit", "2002-12-05", "250.00");

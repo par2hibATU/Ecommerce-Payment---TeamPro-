@@ -2,6 +2,7 @@ package ie.atu.week3.ecommercepayment.Service;
 
 import ie.atu.week3.ecommercepayment.DTO.Payment;
 import ie.atu.week3.ecommercepayment.Repository.PaymentRepo;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,8 @@ public class PaymentService {
     @Autowired
     private PaymentRepo paymentRepo;
 
+    @Autowired
+    private AmqpTemplate amqpTemplate;
     public Payment addPayment(Payment payment){
         return paymentRepo.save(payment);
     }
