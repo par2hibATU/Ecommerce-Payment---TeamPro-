@@ -3,6 +3,7 @@ package ie.atu.week3.ecommercepayment.Service;
 import ie.atu.week3.ecommercepayment.DTO.Payment;
 import ie.atu.week3.ecommercepayment.Repository.PaymentRepo;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,18 @@ import java.util.Optional;
 
 @Service
 public class PaymentService {
-    @Autowired
+
     private PaymentRepo paymentRepo;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    public PaymentService(PaymentRepo paymentRepo, RabbitTemplate rabbitTemplate) {
+        this.paymentRepo = paymentRepo;
+        this.rabbitTemplate = rabbitTemplate;
+    }
     public Payment addPayment(Payment payment){
+        rabbitTemplate.convertAndSend("paymentQueue", payment);
+        System.out.println("Saved payment: " + payment);
         return paymentRepo.save(payment);
     }
 

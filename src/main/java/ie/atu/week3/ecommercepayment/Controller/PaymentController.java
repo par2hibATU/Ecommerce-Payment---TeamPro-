@@ -13,10 +13,11 @@ import java.util.List;
 @RequestMapping("/payments")
 @RestController
 public class PaymentController {
-    @Autowired
+
     private final PaymentService paymentService;
     private final PaymentClient paymentClient;
 
+    @Autowired
     public PaymentController(PaymentClient paymentClient, PaymentService paymentService) {
         this.paymentClient = paymentClient;
         this.paymentService = paymentService;
