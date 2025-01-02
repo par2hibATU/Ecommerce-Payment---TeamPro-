@@ -1,32 +1,29 @@
 package ie.atu.week3.ecommercepayment;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.core.Queue;
-
 
 @Configuration
 public class RabbitMQConfig {
-    public static final String PAYMENT_QUEUE = "payment_queue";
-    public static final String PAYMENT_EXCHANGE = "payment_exchange";
-    public static final String PAYMENT_ROUTING_KEY = "payment_routing_key";
-
     @Bean
-    public Queue paymentQueue() {
-        return new Queue(PAYMENT_QUEUE, true);
+    public Queue productQueue() {
+        return new Queue("paymentQueue", false);
     }
 
     @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(PAYMENT_EXCHANGE);
+    public Jackson2JsonMessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 
     @Bean
-    public Binding binding(org.springframework.amqp.core.Queue paymentQueue, TopicExchange exchange) {
-        return BindingBuilder.bind(paymentQueue).to(exchange).with(PAYMENT_ROUTING_KEY);
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        return rabbitTemplate;
+
     }
 }
