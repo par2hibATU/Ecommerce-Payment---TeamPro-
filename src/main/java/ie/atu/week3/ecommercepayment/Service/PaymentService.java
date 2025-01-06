@@ -14,15 +14,13 @@ import java.util.Optional;
 public class PaymentService {
 
     private PaymentRepo paymentRepo;
-    private final RabbitTemplate rabbitTemplate;
+
 
     @Autowired
-    public PaymentService(PaymentRepo paymentRepo, RabbitTemplate rabbitTemplate) {
+    public PaymentService(PaymentRepo paymentRepo) {
         this.paymentRepo = paymentRepo;
-        this.rabbitTemplate = rabbitTemplate;
     }
     public Payment addPayment(Payment payment){
-        rabbitTemplate.convertAndSend("paymentQueue", payment);
         System.out.println("Saved payment: " + payment);
         return paymentRepo.save(payment);
     }
